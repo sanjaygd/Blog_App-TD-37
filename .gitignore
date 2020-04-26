@@ -1,0 +1,6 @@
+env/
+.vscode/
+Blog_App-TD-37/blog/db.sqlite3
+Blog_App-TD-37/blog/blog_app/migrations/
+Blog_App-TD-37/static_cdn/
+Blog_App-TD-37/media_cdn/

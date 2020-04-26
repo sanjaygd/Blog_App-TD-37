@@ -1,0 +1,50 @@
+{% extends 'blog_app/base.html' %}
+{% load urlify %}
+
+{% block head_title %}
+{{obj_details.title}} | {{block.super}}
+{% endblock head_title %}
+
+{% block content %}
+<div class="col-md-7 offset-md-3">
+    <h1>{{obj_details.title}}</h1><small>Posted {{obj_details.timestamp|timesince}} ago &nbsp;&nbsp;
+        {% if obj_details.draft %}
+        <span style="color: red;" ><strong>Draft</strong></span>
+        {% endif %}
+     </small><br>
+    <!--added timesince here-->
+    {% if obj_details.image %}
+    <img src="{{ obj_details.image.url }}" class="img-responsive">
+    {% endif %}
+
+    <p>{{obj_details.content|linebreaks}}</p><br>
+    <hr/>
+
+    <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="" data-layout="standard"
+        data-action="like" data-size="small" data-share="true"></div>
+    <hr/>
+
+    <div class="fb-comments" data-href="{{request.build_absolute_uri}}" data-numposts="5" data-width=""></div>
+    <hr/>
+    <!-- {{obj_details.content|urlify}} <br> -->
+
+
+    <!-- add the absolute uri as below -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}">
+        Facebook
+    </a>|
+
+    <a href="https://twitter.com/home?status={{share_string}}%20{{request.build_absolute_uri}}/">
+        Twitter
+    </a>|
+
+    <a
+        href="https://www.linkedin.com/shareArticle?mini=true&url={{request.build_absolute_uri}}/&title={{request.build_absolute_uri}}&source={{request.build_absolute_uri}}">
+        Linkedin
+    </a>|
+
+
+    <a href="http://www.reddit.com/submit?url={{request.build_absolute_uri}}&title={{share_string}}">Share on Reddit</a>
+
+</div>
+{% endblock content %}

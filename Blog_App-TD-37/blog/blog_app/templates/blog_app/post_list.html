@@ -1,0 +1,70 @@
+{% extends 'blog_app/base.html' %}
+
+
+{% block content %}
+<h1>Heading for test</h1>
+<div class="col-sm-8 offset-2">
+    <div>
+    <form method="GET" action="">
+        <input type="text" name="q" placeholder="Type here">
+        <input type="submit" value="Submit"/>
+    </form><br><br>
+</div>
+
+    {% for obj in object_list %}
+    <div class="col-sm-6">
+        <div class="card" style="width: 30rem;">
+            {% if obj.image %}
+            <img src="{{obj.image.url}}" class="card-img-top" alt="...">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{obj.title}} - {% if obj.draft %} <span style="color: red;">Draft</span> {% endif %} </h5><br>
+                <h5> {% if obj.publish > today %} <strong>Future Posts</strong> {% endif %} </h5>
+                <p>id : {{obj.id}}</p>
+                <p>{{obj.slug}}</p>
+                <p class="card-text">{{obj.content|truncatechars:120}}</p>
+                <a href="{% url 'posts:post_details' slug=obj.slug %}" class="btn btn-primary">View</a>
+            </div>
+        </div><br><br>
+    </div>
+
+
+
+    <!--dynamic url added-->
+    {% endfor %}
+   
+</div>
+</div>
+
+
+<span><br></span>
+{% for obj in object_list %}
+<!-- <a href="{{ obj.get_absolute_url }}"><strong>{{obj.title}}</strong></a><br> -->
+
+<!-- 2nd method  -->
+{% endfor %}
+
+</div>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q}}
+            {% endif %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+{% endblock content %}
